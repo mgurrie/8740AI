@@ -61,25 +61,4 @@ class CalculatorUI(tk.Tk):
                     operation = char
 
             if current_number:
-                numbers.append(float(current_number))
-
-            if operation == "+":
-                return add(*numbers)
-            elif operation == "-":
-                return subtract(*numbers)
-            elif operation == "*":
-                return multiply(*numbers)
-            elif operation == "/":
-                if 0 in numbers[1:]:
-                    raise ZeroDivisionError("Cannot divide by zero")
-                return divide(*numbers)
-            else:
-                raise ValueError(f"Invalid operation: {operation}")
-        except ZeroDivisionError as e:
-            return str(e)
-        except ValueError as e:
-            return str(e)
-
-if __name__ == "__main__":
-    app = CalculatorUI()
-    app.mainloop()
+                numbers.append(float(current_
