@@ -33,16 +33,26 @@ function addTask() {
 function createTaskElement(taskText) {
   const li = document.createElement('li');
   li.className = 'task-item';
-  li.textContent = taskText;
+  
+  const taskSpan = document.createElement('span');
+  taskSpan.textContent = taskText;
+  li.appendChild(taskSpan);
+
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Edit';
+  editButton.addEventListener('click', editTask);
+  editButton.style.backgroundColor = 'blue';  
+  editButton.style.color = 'white';      
+  li.appendChild(editButton);
 
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
   deleteButton.addEventListener('click', removeTask);
-
   li.appendChild(deleteButton);
 
   return li;
 }
+
 
 // Remove a task from the list and localStorage
 function removeTask(event) {
@@ -74,14 +84,39 @@ function removeTaskFromLocalStorage(taskText) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Load tasks from localStorage on page load
-function loadTasksFromLocalStorage() {
-  let tasks = localStorage.getItem('tasks')
-    ? JSON.parse(localStorage.getItem('tasks'))
-    : [];
+// Load tasks from localStorage on page loadfunction loadTasksFromLocalStorage() {
+  function loadTasksFromLocalStorage() {
+    let tasks = localStorage.getItem('tasks')
+      ? JSON.parse(localStorage.getItem('tasks'))
+      : [];
+  
+    tasks.forEach(task => {
+      const taskItem = createTaskElement(task);
+      taskList.appendChild(taskItem);
+    });
+  }  
 
-  tasks.forEach(task => {
-    const taskItem = createTaskElement(task);
-    taskList.appendChild(taskItem);
-  });
+// Update task in localStorage
+function updateTaskInLocalStorage(oldTaskText, newTaskText) {
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+
+  const index = tasks.indexOf(oldTaskText);
+  if (index !== -1) {
+    tasks[index] = newTaskText;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+}
+
+// Edit a task in the list
+function editTask(event) {
+  const taskItem = event.target.parentElement;
+  const taskSpan = taskItem.querySelector('span');
+  const currentText = taskSpan.textContent;
+
+  const newText = prompt('Edit the task:', currentText);
+
+  if (newText !== null && newText.trim() !== '') {
+    taskSpan.textContent = newText.trim();
+    updateTaskInLocalStorage(currentText, newText.trim());
+  }
 }
