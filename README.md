@@ -1,5 +1,8 @@
 # Calculator
 
+# Prompt
+Help me create python files and a program that is a calculator that calulates addition, subtraction, multipication, and division with any number of inputs. I want a ui as well that is high contrast color. I want a seperate file that contains user tests. I want strong documentation explaining how to use it.
+
 This is a simple calculator program written in Python. It supports addition, subtraction, multiplication, and division operations with an arbitrary number of inputs.
 THIS IS COMPLETLY WRITTEN BY AI IN AMAZON Q FOR VS CODE
 
